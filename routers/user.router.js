@@ -7,9 +7,9 @@ const { create } = require('../controllers/User');
 const router = express.Router();
 
 router.post('/',
+  validation.validateDisplayName,
   validation.validateEmail,
   validation.validatePassword,
-  validation.validateDisplayName,
   create);
 
 module.exports = router;
