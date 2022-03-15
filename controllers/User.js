@@ -12,6 +12,16 @@ const create = async (req, res, _next) => {
     return res.status(201).json({ token });
 };
 
+const getAll = async (req, res, next) => {
+  try {
+    const users = await User.findAll();
+    return res.status(200).json(users);
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   create,
+  getAll,
 };
