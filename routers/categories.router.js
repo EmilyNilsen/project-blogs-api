@@ -3,13 +3,17 @@ const express = require('express');
 const validateToken = require('../middlewares/middlewareJwt');
 const validateName = require('../middlewares/validation.categories');
 
-const categories = require('../controllers/Categories');
+const { create, getAll } = require('../controllers/Categories');
 
 const router = express.Router();
 
 router.post('/',
   validateToken,
   validateName,
-  categories);
+  create);
+
+router.get('/',
+  validateToken,
+  getAll);
 
 module.exports = router;
