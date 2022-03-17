@@ -18,10 +18,39 @@ const create = async (req, res, _next) => {
     title,
     content,
   };
-
   return res.status(201).json(postSucess);
+};
+
+const getAll = async (req, res, _next) => {
+    const posts = await BlogPosts.findAll({
+      include: [{
+        model: User,
+        attributes: {
+          exclude: ['password'],
+        },
+      }, {
+        model: Categories,
+        exclude: ['PostsCategories'],
+      },
+      ],
+    });
+    // const getPosts = {
+    //   id: posts.id,
+    //   title: posts.title,
+    //   content: posts.content,
+    //   published: posts.published,
+    //   updated: posts.updated,
+    //   user: {
+    //     id: user.id,
+    //     displayName: user.displayName,
+    //     email: user.email,
+    //     image: user.image,
+    //   },
+    // };
+    return res.status(200).json(posts);
 };
 
 module.exports = {
   create,
+  getAll,
 };
