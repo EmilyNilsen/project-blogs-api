@@ -3,7 +3,7 @@ const express = require('express');
 const validation = require('../middlewares/validation.User');
 const validateToken = require('../middlewares/middlewareJwt');
 
-const { create, getAll, getById } = require('../controllers/User');
+const { create, getAll, getById } = require('../controllers/UserController');
 
 const router = express.Router();
 

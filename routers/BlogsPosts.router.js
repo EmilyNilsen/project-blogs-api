@@ -4,7 +4,7 @@ const validateToken = require('../middlewares/middlewareJwt');
 const { validateCategoryIds,
         validateTitle,
         validateContent } = require('../middlewares/validation.BlogPosts');
-const { create, getAll } = require('../controllers/BlogPosts');
+const { create, getAll } = require('../controllers/BlogPostsController');
 
 const router = express.Router();
 

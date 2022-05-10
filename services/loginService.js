@@ -1,11 +1,9 @@
 const { User } = require('../models');
 const jwtGenerator = require('../api/jwGenerator');
 
-const login = async (req, res, _next) => {
-  const { email, password } = req.body;
-
+const authentication = async (email, password) => {
   const user = await User.findOne({ where: { email, password } });
-  if (!user) return res.status(400).json({ message: 'Invalid fields' });
+  if (!user) return user;
   const token = jwtGenerator(
     { id: user.id,
       displayName: user.displayName,
@@ -13,7 +11,9 @@ const login = async (req, res, _next) => {
       image: user.image,
     },
   );
-  return res.status(200).json({ token });
+  return token;
 };
 
-module.exports = login;
+module.exports = {
+  authentication,
+};
