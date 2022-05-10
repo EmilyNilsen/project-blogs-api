@@ -9,7 +9,7 @@ Funcionalidades:
 -   O usuário poder logar se o email e senha sejam válidos.
 -   É posssível listar todos os usuáros e também buscar no banco de dados um usuário específico, filtrando ele pelo id da rota.
 -   Adicionar novas categorias de posts e também listar todas as categorias disponíveis no banco de dados.
--   Adicionar um post ao banco de dado,listar todos os posts existentes ou apenas 1 buscando pelo id da rota.
+-   Adicionar um post ao banco de dado,listar todos os posts existentes.
 
 ##  Técnologias usadas
 
