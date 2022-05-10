@@ -1,4 +1,4 @@
-#  Projeto Blogs API ✍
+#  Projeto Blogs API 🖥
 ## Descrição
 
 Projeto proposto pelo curso da  [Trybe](https://betrybe.com/)  em que deveria ser desenvolvida uma API de um CRUD post de blog(usando Sequelize). A Api foi desenvolvida seguindos os princípios de REST. 
