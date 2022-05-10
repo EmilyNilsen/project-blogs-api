@@ -1,3 +1,4 @@
+//Fornecido pela Trybe para iniciar o projeto
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
     await queryInterface.bulkInsert('Categories',
