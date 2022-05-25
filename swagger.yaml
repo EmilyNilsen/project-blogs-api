@@ -1,0 +1,342 @@
+swagger: "2.0"
+info:
+  description: "API de um CRUD com post de blog(usando Sequelize)"
+  version: "1.0.0"
+  title: "BlogsAPI"
+  contact:
+    email: "nilsen.loli.emily@gmail.com"
+
+tags:
+  - name: Autenticacao
+    description: "Onde você encontra tudo sobre o usuário"
+
+  - name: Categorias
+    description: "Onde você encontra tudo sobre as categorias de posts"
+
+  - name: Posts
+    description: "Onde você encontra tudo sobre os posts"
+
+schemes:
+- "https"
+paths:
+  
+  /user:
+    get:
+      tags:
+      - "Autenticacao"
+      summary: "Listar todos os usuários"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Retorna uma lista de todos os Users. Modelo de objeto de usuario abaixo:"
+          schema:
+            $ref: "#/definitions/ModeloDeRespostaDeUsuario"
+
+    post:
+      tags:
+      - "Autenticacao"
+      summary: "Adicione um novo usuário"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto do usuário que será adicionado"
+        required: true
+        schema:
+          $ref: "#/definitions/ModeloDeCriacaoDeUsuario"
+      responses:
+        "201":
+          description: "Retorna o produto criado"
+          schema:
+            $ref: "#/definitions/ModeloDeRespostaDeValidacaoUsuario"
+        "409":
+          description: "Caso exista uma pessoa com o mesmo email na base retorna a mensagem: 'User already exists'"
+
+  /user/{userId}:
+    get:
+      tags:
+      - "Autenticacao"
+      summary: "Encontrar o usuario pelo ID"
+      description: "Retorna apenas um usuario"
+      operationId: "getSaleById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "ID do usuario desejado"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Retorna a venda selecionada"
+          schema:
+            $ref: "#/definitions/ModeloDeRespostaDeUsuario"
+        "404":
+          description: "Caso o usuario não exista retorna a mensagem: 'User does not exist'"
+
+  /login:
+    post:
+      tags:
+      - "Autenticacao"
+      summary: "Fazer login com o usuário"
+      description: "Retorna o token gerado na criacao do usuario"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto do usuário que será adicionado"
+        required: true
+        schema:
+          $ref: "#/definitions/ModeloLoginDeUsuario"
+      responses:
+        "201":
+          description: "Retorna o token do usuario"
+          schema:
+            $ref: "#/definitions/ModeloDeRespostaDeValidacaoUsuario"
+        "400":
+          description: "Caso algum desses campos seja inválido ou não exista um usuário correspondente no banco de dados retorna a mensagem: 'Invalid fields'"
+
+  /categories:
+    get:
+      tags:
+      - "Categorias"
+      summary: "Listar todos as categorias"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Retorna uma lista contendo todos as categorias disponiveis. Modelo de objeto Categoria abaixo:"
+          schema:
+            $ref: "#/definitions/ModeloDeRespostaDeListagemDeCategorias"
+    post:
+      tags:
+      - "Categorias"
+      summary: "Adicione uma nova categoria"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto de categoria"
+        required: true
+        schema:
+          $ref: "#/definitions/ModeloDeCriacaoDeCategoria"
+      responses:
+        "201":
+          description: "Retorna a venda que foi cadastrada"
+          schema:
+            $ref: "#/definitions/ModeloDeRespostaDeCategoria"
+
+  /post:
+    get:
+      tags:
+      - "Posts"
+      summary: "Listar todos os BlogPosts"
+      produces:
+      - "application/json"
+      
+      responses:
+        "200":
+          description: "Retorna uma lista contendo todos os BlogPosts disponiveis. Modelo de objeto BlogPosts abaixo:"
+          schema:
+            $ref: "#/definitions/ModeloDeRespostaDeListagemDeBlogpost"
+        "401":
+          description: "Não é possível listar os blogspost sem o token, é retornado a mensagem: 'Token not found', ou se o token for inválido, é retornado a mensagem: 'Expired or invalid token'"
+
+    post:
+      tags:
+      - "Posts"
+      summary: "Adicione um novo BlogPost"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto de categoria"
+        required: true
+        schema:
+          $ref: "#/definitions/ModeloDeCriacaoDeBlogpost"
+      responses:
+        "201":
+          description: "Retorna a venda que foi cadastrada"
+          schema:
+            $ref: "#/definitions/ModeloDeRespostaCriacaoDeBlogpost"
+        "401":
+          description: "Não é possível listar os blogspost sem o token, é retornado a mensagem: 'Token not found', ou se o token for inválido, é retornado a mensagem: 'Expired or invalid token'"
+
+
+definitions:
+  ModeloDeCriacaoDeUsuario:
+    type: "object"
+    properties:
+      displayName:
+        type: "string"
+        example: "Brett Wiltshire"
+      email:
+        type: "integer"
+        example: "brett@email.com"
+      password:
+        type: "string"
+        example: "123456"
+      image:
+        type: "string"
+        example: "http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png"
+
+  ModeloDeRespostaDeUsuario:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        displeyName:
+          type: "string"
+          example: "Brett Wiltshire"
+        email:
+          type: "string"
+          example: "brett@email.com"
+        image:
+          type: "string"
+          example: "http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png"
+
+  ModeloDeRespostaDeValidacaoUsuario:
+    type: "object"
+    properties:
+      token:
+        type: "string"
+        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo1LCJkaXNwbGF5TmFtZSI6InVzdWFyaW8gZGUgdGVzdGUiLCJlbWFpbCI6InRlc3RlQGVtYWlsLmNvbSIsImltYWdlIjoibnVsbCJ9LCJpYXQiOjE2MjAyNDQxODcsImV4cCI6MTYyMDY3NjE4N30.Roc4byj6mYakYqd9LTCozU1hd9k_Vw5IWKGL4hcCVG8"
+
+  ModeloLoginDeUsuario:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+        example: "email@mail.com"
+      password:
+        type: "string"
+        example: "123456"
+
+  ModeloDeCriacaoDeCategoria:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "Inovacao"
+
+  ModeloDeRespostaDeCategoria:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name: 
+        type: "string"
+        example: "Inovacao"
+
+  ModeloDeRespostaDeListagemDeCategorias:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+          example: "Escola"
+
+  ModeloDeRespostaDeListagemDeBlogpost:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+          example: 1
+        title: 
+          type: "string"
+          example: "Post do Ano"
+        content:
+          type: "string"
+          example: "Melhor post do ano"
+        userId:
+          type: "integer"
+          example: "1"
+        published:
+          type: "string"
+          example: "2011-08-01T19:58:00.000Z"
+        upstaed:
+          type: "string"
+          example: "2011-08-01T19:58:51.000Z"
+        user:
+          type: "object"
+          properties:
+            id:
+              type: "integer"
+              format: "int64"
+              example: 1
+            displeyName:
+              type: "string"
+              example: "Lewis Hamilton"
+            email:
+              type: "string"
+              example: "lewishamilton@gmail.com"
+            image:
+              type: "string"
+              example: "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2017_Malaysia.jpg"
+        categories:
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "integer"
+                example: 1
+              name:
+                type: "string"
+                example: "Inovação"
+
+  ModeloDeCriacaoDeBlogpost:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        example: "Latest updates, August 1st"
+        
+      content:
+        type: "string"
+        example: "The whole text for the blog post goes here in this key"
+        
+      categoriesIds:
+          example: [1,2]
+
+  ModeloDeRespostaCriacaoDeBlogpost:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        example: 4
+      userId:
+        type: "integer"
+        example: 1
+      title:
+        type: "string"
+        example: "Latest updates, August 1st"
+      content:
+        type: "string"
+        example: "The whole text for the blog post goes here in this key"
