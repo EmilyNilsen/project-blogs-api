@@ -19,6 +19,8 @@ router.get('/',
   validateToken,
   getAll);
 
-router.get('/:id', getById);
+router.get('/:id',
+  validateToken,
+  getById);
 
 module.exports = router;

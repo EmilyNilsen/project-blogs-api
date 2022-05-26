@@ -35,6 +35,7 @@ return posts;
 
 const getById = async (id) => {
   const post = await BlogPosts.findByPk(id);
+  if (!post) return null;
   console.log(post);
   return post;
 };
