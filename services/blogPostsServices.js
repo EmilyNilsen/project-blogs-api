@@ -33,7 +33,14 @@ const posts = await BlogPosts.findAll({
 return posts;
 };
 
+const getById = async (id) => {
+  const post = await BlogPosts.findByPk(id);
+  console.log(post);
+  return post;
+};
+
 module.exports = {
   create,
   getAll,
+  getById,
 };

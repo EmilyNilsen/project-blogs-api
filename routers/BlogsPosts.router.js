@@ -4,7 +4,7 @@ const validateToken = require('../middlewares/middlewareJwt');
 const { validateCategoryIds,
         validateTitle,
         validateContent } = require('../middlewares/validation.BlogPosts');
-const { create, getAll } = require('../controllers/BlogPostsController');
+const { create, getAll, getById } = require('../controllers/BlogPostsController');
 
 const router = express.Router();
 
@@ -18,5 +18,7 @@ router.post('/',
 router.get('/',
   validateToken,
   getAll);
+
+router.get('/:id', getById);
 
 module.exports = router;
