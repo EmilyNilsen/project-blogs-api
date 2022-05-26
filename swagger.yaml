@@ -17,7 +17,8 @@ tags:
     description: "Onde você encontra tudo sobre os posts"
 
 schemes:
-- "https"
+- "http"
+
 paths:
   
   /user:
@@ -49,9 +50,10 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/ModeloDeCriacaoDeUsuario"
+
       responses:
         "201":
-          description: "Retorna o produto criado"
+          description: "Retorna o usuário criado"
           schema:
             $ref: "#/definitions/ModeloDeRespostaDeValidacaoUsuario"
         "409":
