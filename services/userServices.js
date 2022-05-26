@@ -4,7 +4,7 @@ const jwtGenerator = require('../api/jwGenerator');
 const create = async (newUser) => {
   const alreadyExists = await User.findOne({ where: { email: newUser.email } });
   if (alreadyExists) return null;
-  const createdUser = await User.create();
+  const createdUser = await User.create(newUser);
   const token = jwtGenerator({ id: createdUser.id, email: createdUser.email });
   return token;
 };

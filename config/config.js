@@ -6,7 +6,6 @@ module.exports = {
     password: process.env.MYSQL_PASSWORD,
     database: 'blogs_api',
     host: process.env.HOSTNAME,
-    port: process.env.PORTDB,
     dialect: 'mysql',
   },
   test: {
@@ -14,7 +13,6 @@ module.exports = {
     password: process.env.MYSQL_PASSWORD,
     database: 'blogs_api',
     host: process.env.HOSTNAME,
-    port: process.env.PORTDB,
     dialect: 'mysql',
   },
   production: {
@@ -22,7 +20,6 @@ module.exports = {
     password: process.env.MYSQL_PASSWORD,
     database: 'blogs_api',
     host: process.env.HOSTNAME,
-    port: process.env.PORTDB,
     dialect: 'mysql',
   },
 };

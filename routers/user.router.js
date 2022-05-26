@@ -1,7 +1,7 @@
 const express = require('express');
 
 const validation = require('../middlewares/validation.User');
-const validateToken = require('../middlewares/middlewareJwt');
+// const validateToken = require('../middlewares/middlewareJwt');
 
 const { create, getAll, getById } = require('../controllers/UserController');
 
@@ -14,11 +14,9 @@ router.post('/',
   create);
 
 router.get('/',
-  validateToken,
   getAll);
 
 router.get('/:id',
-  validateToken,
   getById);
 
 module.exports = router;
