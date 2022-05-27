@@ -1,4 +1,3 @@
-//Fornecido pela Trybe para iniciar o projeto
 {
   "name": "blogs-api",
   "version": "0.1.0",
@@ -12,7 +11,7 @@
     "mysql2": "2.1.0",
     "sequelize": "6.3.4",
     "shelljs": "0.8.4",
-    "swagger-ui-express": "^4.4.0",
+    "swagger-ui-express": "^4.3.0",
     "yamljs": "^0.3.0"
   },
   "scripts": {

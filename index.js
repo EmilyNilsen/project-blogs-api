@@ -14,7 +14,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use('/user', userRouter);
 app.use('/login', loginRouter);
 app.use('/categories', categoriesRouter);
-app.use('/post', blogPostsRouter);
+app.use('/blogpost', blogPostsRouter);
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
