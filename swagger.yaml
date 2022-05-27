@@ -7,20 +7,20 @@ info:
     email: "nilsen.loli.emily@gmail.com"
 
 tags:
-  - name: Autenticacao
-    description: "Onde você encontra tudo sobre o usuário"
+- name: Autenticacao
+  description: "Onde você encontra tudo sobre o usuário"
 
-  - name: Categorias
-    description: "Onde você encontra tudo sobre as categorias de posts"
+- name: Categorias
+  description: "Onde você encontra tudo sobre as categorias de posts"
 
-  - name: Posts
-    description: "Onde você encontra tudo sobre os posts"
+- name: Posts
+  description: "Onde você encontra tudo sobre os posts"
 
 schemes:
 - "http"
 
 paths:
-  
+
   /user:
     get:
       tags:
@@ -140,7 +140,7 @@ paths:
           schema:
             $ref: "#/definitions/ModeloDeRespostaDeCategoria"
 
-  /post:
+  /blogpost:
     get:
       tags:
       - "Posts"

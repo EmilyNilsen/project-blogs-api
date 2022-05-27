@@ -36,12 +36,23 @@ return posts;
 const getById = async (id) => {
   const post = await BlogPosts.findByPk(id);
   if (!post) return null;
-  console.log(post);
   return post;
 };
+
+const update = async (title, content, id) => {
+  const postId = await BlogPosts.update({ title, content }, { where: { id } });
+  if (postId.length) {
+    const post = await BlogPosts.findAll({
+      where: { id },
+      include: [{ model: Categories, as: 'categories' }],
+    });
+    return post;
+  }
+}
 
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };

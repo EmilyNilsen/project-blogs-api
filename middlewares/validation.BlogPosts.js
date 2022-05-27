@@ -28,8 +28,19 @@ const validateContent = (req, res, next) => {
   }
 };
 
+const validateCategories = (req, res, next) => {
+  try {
+    const { categoryIds } = req.body;
+    if (categoryIds) return res.status(400).json({ message: '"Categories" cannot be edited' });
+    next();
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   validateCategoryIds,
   validateTitle,
   validateContent,
+  validateCategories,
 };
