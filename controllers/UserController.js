@@ -28,8 +28,20 @@ const getById = async (req, res, next) => {
   }
 };
 
+const deleteUserController = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const response = await userServices.deleteUser({ id });
+    if(!response) return res.status(404).json({ message: 'user not found'})
+    return res.status(204).json(send);
+  } catch (e) {
+    next(e);
+  };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  deleteUserController,
 };

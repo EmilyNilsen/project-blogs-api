@@ -7,8 +7,11 @@ info:
     email: "nilsen.loli.emily@gmail.com"
 
 tags:
-- name: Autenticacao
+- name: "Usuario"
   description: "Onde você encontra tudo sobre o usuário"
+
+- name: Autenticacao
+  description: "Onde você encontra tudo sobre o login"
 
 - name: Categorias
   description: "Onde você encontra tudo sobre as categorias de posts"
@@ -22,25 +25,11 @@ schemes:
 paths:
 
   /user:
-    get:
-      tags:
-      - "Autenticacao"
-      summary: "Listar todos os usuários"
-      produces:
-      - "application/json"
-      responses:
-        "200":
-          description: "Retorna uma lista de todos os Users. Modelo de objeto de usuario abaixo:"
-          schema:
-            $ref: "#/definitions/ModeloDeRespostaDeUsuario"
-
     post:
       tags:
-      - "Autenticacao"
+      - "Usuario"
       summary: "Adicione um novo usuário"
       description: ""
-      consumes:
-      - "application/json"
       produces:
       - "application/json"
       parameters:
@@ -59,10 +48,22 @@ paths:
         "409":
           description: "Caso exista uma pessoa com o mesmo email na base retorna a mensagem: 'User already exists'"
 
+    get:
+      tags:
+      - "Usuario"
+      summary: "Listar todos os usuários"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Retorna uma lista de todos os Users. Modelo de objeto de usuario abaixo:"
+          schema:
+            $ref: "#/definitions/ModeloDeRespostaDeUsuario"
+
   /user/{userId}:
     get:
       tags:
-      - "Autenticacao"
+      - "Usuario"
       summary: "Encontrar o usuario pelo ID"
       description: "Retorna apenas um usuario"
       operationId: "getSaleById"
@@ -118,6 +119,9 @@ paths:
           description: "Retorna uma lista contendo todos as categorias disponiveis. Modelo de objeto Categoria abaixo:"
           schema:
             $ref: "#/definitions/ModeloDeRespostaDeListagemDeCategorias"
+      security:
+        - bearer: [ ]
+  
     post:
       tags:
       - "Categorias"
@@ -139,6 +143,8 @@ paths:
           description: "Retorna a venda que foi cadastrada"
           schema:
             $ref: "#/definitions/ModeloDeRespostaDeCategoria"
+      security:
+        - bearer: [ ]
 
   /blogpost:
     get:
@@ -179,6 +185,13 @@ paths:
             $ref: "#/definitions/ModeloDeRespostaCriacaoDeBlogpost"
         "401":
           description: "Não é possível listar os blogspost sem o token, é retornado a mensagem: 'Token not found', ou se o token for inválido, é retornado a mensagem: 'Expired or invalid token'"
+
+securityDefinitions:
+  bearer:
+    type: "apiKey"
+    name: "authorization"
+    in: "header"
+    description: "Enter your bearer token in the format **Bearer &lt;token>**"
 
 
 definitions:
