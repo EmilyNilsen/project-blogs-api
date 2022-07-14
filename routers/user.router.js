@@ -3,7 +3,7 @@ const express = require('express');
 const validation = require('../middlewares/validation.User');
 // const validateToken = require('../middlewares/middlewareJwt');
 
-const { create, getAll, getById } = require('../controllers/UserController');
+const { create, getAll, getById, deleteUserController } = require('../controllers/UserController');
 
 const router = express.Router();
 
@@ -18,5 +18,9 @@ router.get('/',
 
 router.get('/:id',
   getById);
+
+router.delete('/:id',
+deleteUserController,
+);
 
 module.exports = router;

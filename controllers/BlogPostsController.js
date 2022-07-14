@@ -43,9 +43,21 @@ const update = async (req, res, next) => {
   }
 }
 
+const remove = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const response = await blogPostsServices.remove(id);
+    if (!response) return res.status(404).json({ message: 'Post does not exist' });
+    return res.status(204).end();
+  } catch(e) {
+    next(e)
+  }
+}
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  remove
 };

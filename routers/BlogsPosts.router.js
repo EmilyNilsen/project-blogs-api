@@ -5,7 +5,7 @@ const { validateCategoryIds,
         validateTitle,
         validateContent,
         validateCategories} = require('../middlewares/validation.BlogPosts');
-const { create, getAll, getById, update } = require('../controllers/BlogPostsController');
+const { create, getAll, getById, update, remove } = require('../controllers/BlogPostsController');
 
 const router = express.Router();
 
@@ -30,5 +30,9 @@ router.put('/:id',
   validateContent,
   validateCategories,
   update);
+
+router.delete('/:id',
+  validateToken,
+  remove);
 
 module.exports = router;

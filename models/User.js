@@ -1,12 +1,6 @@
 const { DataTypes } = require('sequelize');
 
 const attributes = {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: true,
-    autoIncrement: true,
-  },
   displayName: {
     type: DataTypes.STRING,
   },
@@ -33,7 +27,7 @@ module.exports = (sequelize) => {
     },
   );
   User.associate = (models) => {
-    User.hasMany(models.BlogPosts, { foreignKey: 'userId' });
+    User.hasMany(models.BlogPosts, { foreignKey: 'userId'}, onUpdate='CASCADE', onDelete='CASCADE');
   };
 return User;
 };
