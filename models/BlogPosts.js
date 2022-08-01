@@ -1,51 +1,22 @@
-const { DataTypes } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  const BlogPost = sequelize.define('BlogPosts', {
+    title: DataTypes.STRING,
+    content: DataTypes.STRING,
+    userId: { type: DataTypes.INTEGER, foreignKey: true },
+    published: { type: sequelize.fn('now') },
+    updated: { type: sequelize.fn('now') },
+  }, {
+    createdAt: 'published',
+    updatedAt: 'updated',
+    tableName: 'BlogPosts',
+  });
 
-const attributes = {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: true,
-    autoIncrement: true,
-  },
-  title: {
-    allowNull: false,
-    type: DataTypes.STRING,
-  },
-  content: {
-    type: DataTypes.STRING,
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'Users',
-      key: 'id',
-    },
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  },
-  published: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-  updated: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
-};
-
-module.exports = (sequelize) => {
-  const BlogPosts = sequelize.define(
-    'BlogPosts',
-    attributes,
-    {
-      underscore: true,
-      timestamps: false,
-      tableName: 'BlogPosts',
-    },
-  );
-  BlogPosts.associate = (models) => {
-    BlogPosts.belongsTo(models.User, { foreignKey: 'userId', as: 'user', allowNull:false });
+  BlogPost.associate = (models) => {
+    BlogPost.belongsTo(models.User, {
+      as: 'user',
+      foreignKey: 'userId',
+    });
   };
-  return BlogPosts;
+
+  return BlogPost;
 };

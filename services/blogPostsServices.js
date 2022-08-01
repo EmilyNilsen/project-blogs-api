@@ -19,18 +19,13 @@ const create = async (tokenDecoded, title, content, categoryIds) => {
 };
 
 const getAll = async () => {
-const posts = await BlogPosts.findAll({
-  include: [{
-    model: User,
-    attributes: { exclude: ['password'] },
-      as: 'user',
-  }, {
-    model: Categories,
-    through: { attributes: [] },
-    as: 'categories',
-    }],
-});
-return posts;
+  const find = await BlogPosts.findAll({
+    include: [{ model: User,
+      attributes: { exclude: ['password'] },
+      as: 'user' },
+      { model: Categories, as: 'categories' },
+    ] });
+  return find;
 };
 
 const getById = async (id) => {

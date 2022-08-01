@@ -1,16 +1,12 @@
 const { User } = require('../models');
-const jwtGenerator = require('../api/jwGenerator');
 
-const create = async (newUser) => {
-  const alreadyExists = await User.findOne({ where: { email: newUser.email } });
-  if (alreadyExists) return null;
-  const createdUser = await User.create(newUser);
-  const response = jwtGenerator({ id: createdUser.id, email: createdUser.email });
-  return { token: response };
+const create = async (userInfo) => {
+  const created = await User.create(userInfo);
+  return created.dataValues;
 };
 
-const getAll = async () => {
-const users = await User.findAll();
+const getAll = async (attributes) => {
+const users = await User.findAll(attributes);
   return users;
 };
 
@@ -19,10 +15,9 @@ const getById = async (id) => {
   return user;
 };
 
-const deleteUser = async ({id}) => {
-  const response = await User.findByPk(id);
-  if (!response) return null;
-  return User.destroy({ where: { id } });
+const deleteUser = async (idUser) => {
+  const delUser = await User.destroy({ where: { id: idUser } });
+  return delUser;
 };
 
 module.exports = {
