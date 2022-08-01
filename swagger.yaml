@@ -5,6 +5,8 @@ info:
   title: "BlogsAPI"
   contact:
     email: "nilsen.loli.emily@gmail.com"
+host: "https://blogs-post-api.herokuapp.com/"
+basePath: "/"
 
 tags:
 - name: "Usuario"
