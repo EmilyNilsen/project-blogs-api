@@ -1,33 +1,21 @@
-const { DataTypes } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define('User', {
+    displayName: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING,
+    image: DataTypes.STRING,
+  },
+  {
+    timestamps: false,
+    tableName: 'Users',
+  });
 
-const attributes = {
-  displayName: {
-    type: DataTypes.STRING,
-  },
-  email: {
-    type: DataTypes.STRING,
-    unique: true,
-  },
-  password: {
-    type: DataTypes.STRING,
-  },
-  image: {
-    type: DataTypes.STRING,
-  },
-};
-
-module.exports = (sequelize) => {
-  const User = sequelize.define(
-    'User',
-    attributes,
-    {
-      underscore: true,
-      timestamps: false,
-      tableName: 'Users',
-    },
-  );
   User.associate = (models) => {
-    User.hasMany(models.BlogPosts, { foreignKey: 'userId'}, onUpdate='CASCADE', onDelete='CASCADE');
+    User.hasMany(models.BlogPosts, {
+      as: 'posts',
+      foreignKey: 'userId',
+    });
   };
-return User;
+
+  return User;
 };

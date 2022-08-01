@@ -16,7 +16,7 @@ app.use('/login', loginRouter);
 app.use('/categories', categoriesRouter);
 app.use('/blogpost', blogPostsRouter);
 
-app.listen(3001, () => console.log('ouvindo porta 3001!'));
+app.listen(process.env.PORT, () => console.log(`ouvindo porta: ${process.env.PORT}!`));
 
 app.get('/', (request, response) => {
   response.send();

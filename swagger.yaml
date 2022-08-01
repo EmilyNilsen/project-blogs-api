@@ -84,6 +84,22 @@ paths:
         "404":
           description: "Caso o usuario não exista retorna a mensagem: 'User does not exist'"
 
+  /user/{me}:
+    delete:
+      tags:
+      - "Usuario"
+      summary: "Delete um usuário pelo token"
+      description: ""
+      produces:
+      - "application/json"
+      responses:
+        "204":
+          description: "Retorna o status 204"
+        "404":
+          description: "Caso o post não exista retorna a mensagem: 'Post does not exist'"
+      security:
+        - bearer: [ ]
+
   /login:
     post:
       tags:
@@ -161,6 +177,8 @@ paths:
             $ref: "#/definitions/ModeloDeRespostaDeListagemDeBlogpost"
         "401":
           description: "Não é possível listar os blogspost sem o token, é retornado a mensagem: 'Token not found', ou se o token for inválido, é retornado a mensagem: 'Expired or invalid token'"
+      security:
+        - bearer: [ ]
 
     post:
       tags:
@@ -185,6 +203,79 @@ paths:
             $ref: "#/definitions/ModeloDeRespostaCriacaoDeBlogpost"
         "401":
           description: "Não é possível listar os blogspost sem o token, é retornado a mensagem: 'Token not found', ou se o token for inválido, é retornado a mensagem: 'Expired or invalid token'"
+      security:
+        - bearer: [ ]
+
+    put:
+      tags:
+      - "Posts"
+      summary: "Atualize um BlogPost existente"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto de categoria"
+        required: true
+        schema:
+          $ref: "#/definitions/ModeloDeAtualizacaoDeBlogpost"
+      responses:
+        "201":
+          description: "Retorna o BlogPost atualizado"
+          schema:
+            $ref: "#/definitions/ModeloDeRespostaDeAtualizacaoDeBlogpost"
+        "401":
+          description: "Não é possível listar os blogspost sem o token, é retornado a mensagem: 'Token not found', ou se o token for inválido, é retornado a mensagem: 'Expired or invalid token'"
+      security:
+        - bearer: [ ]
+
+  /blogpost/{postId}:
+    get:
+      tags:
+      - "Posts"
+      summary: "Retorna um BlogPost pelo Id"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "postId"
+        in: "path"
+        description: "ID do post desejado"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Retorna o post desejado"
+        "404":
+          description: "Caso o post não exista retorna a mensagem: 'Post does not exist'"
+      security:
+        - bearer: [ ]
+
+    delete:
+      tags:
+      - "Posts"
+      summary: "Delete um BlogPost pelo Id"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "postId"
+        in: "path"
+        description: "ID do post desejado"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "204":
+          description: "Retorna o status 204"
+        "404":
+          description: "Caso o post não exista retorna a mensagem: 'Post does not exist'"
+      security:
+        - bearer: [ ]
 
 securityDefinitions:
   bearer:
@@ -193,17 +284,16 @@ securityDefinitions:
     in: "header"
     description: "Enter your bearer token in the format **Bearer &lt;token>**"
 
-
 definitions:
   ModeloDeCriacaoDeUsuario:
     type: "object"
     properties:
       displayName:
         type: "string"
-        example: "Brett Wiltshire"
+        example: "Teste Aqui"
       email:
         type: "integer"
-        example: "brett@email.com"
+        example: "TesteAqui@email.com"
       password:
         type: "string"
         example: "123456"
@@ -221,10 +311,10 @@ definitions:
           format: "int64"
         displeyName:
           type: "string"
-          example: "Brett Wiltshire"
+          example: "Teste Aqui"
         email:
           type: "string"
-          example: "brett@email.com"
+          example: "TesteAqui@email.com"
         image:
           type: "string"
           example: "http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png"
@@ -241,7 +331,7 @@ definitions:
     properties:
       email:
         type: "string"
-        example: "email@mail.com"
+        example: "TesteAqui@email.com"
       password:
         type: "string"
         example: "123456"
@@ -332,13 +422,12 @@ definitions:
       title:
         type: "string"
         example: "Latest updates, August 1st"
-        
       content:
         type: "string"
         example: "The whole text for the blog post goes here in this key"
-        
-      categoriesIds:
-          example: [1,2]
+      categoryIds:
+        type: 'array'
+        example: [1,2]
 
   ModeloDeRespostaCriacaoDeBlogpost:
     type: "object"
@@ -355,3 +444,37 @@ definitions:
       content:
         type: "string"
         example: "The whole text for the blog post goes here in this key"
+
+  ModeloDeAtualizacaoDeBlogpost:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        example: "Latest updates, August 1st"
+      content:
+        type: "string"
+        example: "The whole text for the blog post goes here in this key"
+
+  ModeloDeRespostaDeAtualizacaoDeBlogpost:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        example: "Latest updates, August 1st"
+      content:
+        type: "string"
+        example: "The whole text for the blog post goes here in this key"
+      userId:
+        type: "integer"
+        example: 1
+      Categories:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            id:
+              type: "integer"
+              example: 1
+            name:
+              type: "string"
+              example: "Escola"
